@@ -19,7 +19,12 @@ namespace api_tutorial.Repository
         }
         public async Task<List<Comment>> GetAllAsync()
         {
-            return await _context.Comment.ToListAsync();
+            return await _context.Comments.ToListAsync();
+        }
+
+        public async Task<Comment?> GetByIdAsync(int id)
+        {
+            return await _context.Comments.FindAsync(id);
         }
     }
 }
