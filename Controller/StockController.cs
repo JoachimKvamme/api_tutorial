@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using api_tutorial.Mappers;
 using api_tutorial.Dtos.Stock;
 using System.Linq.Expressions;
+using Microsoft.EntityFrameworkCore;
 
 namespace api_tutorial.Controller
 {
@@ -23,9 +24,10 @@ namespace api_tutorial.Controller
         }
 
         [HttpGet]
-        public IActionResult GetAll() {
-            var stocks = _context.Stock.ToList()
-                .Select(s => s.ToStockDto());
+        public async Task<IActionResult> GetAll() {
+            var stocks = await _context.Stock.ToListAsync();
+
+            var stockDto = stocks.Select(s => s.ToStockDto());
 
             return Ok(stocks);
         }
