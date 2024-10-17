@@ -6,9 +6,10 @@ using api_tutorial.Models;
 using api_tutorial.Data;
 using Microsoft.AspNetCore.Mvc;
 using api_tutorial.Mappers;
-using api_tutorial.Dtos.Stock;
+using api_tutorial.Dtos.Stock; 
 using System.Linq.Expressions;
 using Microsoft.EntityFrameworkCore;
+using api_tutorial.Interfaces;
 
 namespace api_tutorial.Controller
 {
@@ -18,14 +19,16 @@ namespace api_tutorial.Controller
     {   
 
         private readonly ApplicationDBContext _context;
-        public StockController(ApplicationDBContext context)
+        private readonly IStockRepository _stockRepo;
+        public StockController(ApplicationDBContext context, IStockRepository stockRepo)
         {
+            _stockRepo = stockRepo;
             _context = context;
         }
 
         [HttpGet]
         public async Task<IActionResult> GetAll() {
-            var stocks = await _context.Stock.ToListAsync();
+            var stocks = await _stockRepo.GetAllAsync();
 
             var stockDto = stocks.Select(s => s.ToStockDto());
 
