@@ -10,6 +10,7 @@ using api_tutorial.Dtos.Stock;
 using System.Linq.Expressions;
 using Microsoft.EntityFrameworkCore;
 using api_tutorial.Interfaces;
+using api_tutorial.Helpers;
 
 namespace api_tutorial.Controller
 {
@@ -27,10 +28,10 @@ namespace api_tutorial.Controller
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAll() {
+        public async Task<IActionResult> GetAll([FromQuery] QueryObject query) {
             if(!ModelState.IsValid)
                 return BadRequest(ModelState);
-            var stocks = await _stockRepo.GetAllAsync();
+            var stocks = await _stockRepo.GetAllAsync(query);
 
             var stockDto = stocks.Select(s => s.ToStockDto());
 
