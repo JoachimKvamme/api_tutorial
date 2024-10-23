@@ -67,5 +67,21 @@ namespace api_tutorial.Controller
                 return Created();
             }
         }
+        [HttpDelete]
+        [Authorize]
+        public async Task<IActionResult> DeletePortfolio(string symbol) 
+        {
+            var username = User.GetUserName();
+            var appUser = await _userManager.FindByNameAsync(username);
+
+            var userPortfolio = await _portfolioRepo.GetUserPortfolio(appUser);
+
+            var filteredStock = userPortfolio.Where(s => s.Symbol.ToLower() == symbol.ToLower()).ToList();
+
+            if(filteredStock.Count() == 1)
+            {
+                await _portfolioRepo.
+            }
+        }
     }
 }
