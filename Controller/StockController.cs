@@ -11,6 +11,7 @@ using System.Linq.Expressions;
 using Microsoft.EntityFrameworkCore;
 using api_tutorial.Interfaces;
 using api_tutorial.Helpers;
+using Microsoft.AspNetCore.Authorization;
 
 namespace api_tutorial.Controller
 {
@@ -28,6 +29,7 @@ namespace api_tutorial.Controller
         }
 
         [HttpGet]
+        [Authorize]
         public async Task<IActionResult> GetAll([FromQuery] QueryObject query) {
             if(!ModelState.IsValid)
                 return BadRequest(ModelState);
