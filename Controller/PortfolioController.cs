@@ -80,8 +80,14 @@ namespace api_tutorial.Controller
 
             if(filteredStock.Count() == 1)
             {
-                await _portfolioRepo.
+                await _portfolioRepo.DeletePortfolio(appUser, symbol);
+                
+            } 
+            else 
+            {
+                return BadRequest("Stock is not in your portfolio");
             }
+            return Ok();
         }
     }
 }
